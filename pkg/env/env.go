@@ -6,18 +6,34 @@ import (
 	"strings"
 )
 
+// Profile 环境常量
+type Profile int
+
+// Profile 环境配置常量
+const (
+	Dev Profile = iota
+	Fat
+	Uat
+	Pro
+)
+
+// String 将 Profile 转换为字符串，用来提供 toString 方法
+func (p Profile) String() string {
+	return [...]string{"dev", "fat", "uat", "pro"}[p]
+}
+
 // Environment 环境配置接口
 type Environment interface {
-	Value() string // 获取环境值
+	Value() Profile // 获取环境值
 	ignore()
 }
 
 // environment 环境配置
 type environment struct {
-	value string
+	value Profile
 }
 
-func (e environment) Value() string {
+func (e environment) Value() Profile {
 	return e.value
 }
 
@@ -27,18 +43,12 @@ func (e environment) ignore() {
 
 var _ Environment = (*environment)(nil)
 
-// 初始化一些环境
-var (
-	dev     Environment = &environment{value: "dev"} // 开发环境
-	fat     Environment = &environment{value: "fat"} // 测试环境
-	uat     Environment = &environment{value: "uat"} // 预上线环境
-	pro     Environment = &environment{value: "pro"} // 生产环境
-	current Environment                              // 当前环境
-)
+// 当前环境
+var current Environment
 
 // Current 获取当前环境
-func Current() Environment {
-	return current
+func Current() Profile {
+	return current.Value()
 }
 
 // Init 初始化环境
@@ -48,15 +58,15 @@ func Init() {
 
 	switch strings.ToLower(strings.TrimSpace(*env)) {
 	case "dev":
-		current = dev
+		current = &environment{value: Dev}
 	case "fat":
-		current = fat
+		current = &environment{value: Fat}
 	case "uat":
-		current = uat
+		current = &environment{value: Uat}
 	case "pro":
-		current = pro
+		current = &environment{value: Pro}
 	default:
-		current = dev
+		current = &environment{value: Dev}
 		fmt.Println("Warning: '-env' cannot be found, or it is illegal. The default 'dev' will be used.")
 	}
 }

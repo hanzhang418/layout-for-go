@@ -13,55 +13,55 @@ func TestInit(t *testing.T) {
 	tests := []struct {
 		name        string
 		args        []string
-		wantActive  string
+		wantActive  Profile
 		wantWarning bool
 	}{
 		{
 			name:        "dev environment",
 			args:        []string{"-env", "dev"},
-			wantActive:  "dev",
+			wantActive:  Dev,
 			wantWarning: false,
 		},
 		{
 			name:        "fat environment",
 			args:        []string{"-env", "fat"},
-			wantActive:  "fat",
+			wantActive:  Fat,
 			wantWarning: false,
 		},
 		{
 			name:        "uat environment",
 			args:        []string{"-env", "uat"},
-			wantActive:  "uat",
+			wantActive:  Uat,
 			wantWarning: false,
 		},
 		{
 			name:        "pro environment",
 			args:        []string{"-env", "pro"},
-			wantActive:  "pro",
+			wantActive:  Pro,
 			wantWarning: false,
 		},
 		{
 			name:        "pro with whitespace",
 			args:        []string{"-env", " pro "},
-			wantActive:  "pro",
+			wantActive:  Pro,
 			wantWarning: false,
 		},
 		{
 			name:        "invalid environment",
 			args:        []string{"-env", "invalid"},
-			wantActive:  "dev",
+			wantActive:  Dev,
 			wantWarning: true,
 		},
 		{
 			name:        "empty environment",
 			args:        []string{"-env", ""},
-			wantActive:  "dev",
+			wantActive:  Dev,
 			wantWarning: true,
 		},
 		{
 			name:        "no environment flag",
 			args:        []string{},
-			wantActive:  "dev",
+			wantActive:  Dev,
 			wantWarning: true,
 		},
 	}
@@ -95,7 +95,7 @@ func TestInit(t *testing.T) {
 			output := buf.String()
 
 			// 验证active的值
-			if Current().Value() != tt.wantActive {
+			if Current() != tt.wantActive {
 				t.Errorf("current = %v, want %v", current, tt.wantActive)
 			}
 
