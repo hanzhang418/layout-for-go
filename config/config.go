@@ -10,6 +10,10 @@ import (
 
 // Config 映射 config/*.yaml 中配置的结构体
 type Config struct {
+	Log struct {
+		Level string `mapstructure:"level"`
+	} `mapstructure:"log"`
+
 	Default struct {
 		Name string `mapstructure:"name"`
 		Age  int    `mapstructure:"age"`

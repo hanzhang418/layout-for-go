@@ -18,9 +18,20 @@ type option struct {
 type Option func(*option)
 
 // WithLevel 配置日志等级
-func WithLevel(level zapcore.Level) Option {
+func WithLevel(level string) Option {
 	return func(o *option) {
-		o.level = level
+		var l zapcore.Level
+		switch level {
+		case "debug":
+			l = zapcore.DebugLevel
+		case "info":
+			l = zapcore.InfoLevel
+		case "warn":
+			l = zapcore.WarnLevel
+		case "error":
+			l = zapcore.ErrorLevel
+		}
+		o.level = l
 	}
 }
 
