@@ -1,7 +1,6 @@
 package config
 
 import (
-	_ "embed"
 	"fmt"
 	"github.com/spf13/viper"
 	"layout-for-go/pkg/env"
@@ -11,7 +10,6 @@ import (
 
 // Config 映射 config/*.yaml 中配置的结构体
 type Config struct {
-	Profile string `mapstructure:"profile"`
 	Default struct {
 		Name string `mapstructure:"name"`
 		Age  int    `mapstructure:"age"`
