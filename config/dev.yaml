@@ -1,1 +1,6 @@
-profile: dev
+app:
+  name: layout-for-go
+  port: 18080
+
+log:
+  level: debug

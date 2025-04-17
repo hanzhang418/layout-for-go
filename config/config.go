@@ -10,6 +10,10 @@ import (
 
 // Config 映射 config/*.yaml 中配置的结构体
 type Config struct {
+	App struct {
+		Name string `mapstructure:"name"`
+		Port int    `mapstructure:"port"`
+	}
 	Log struct {
 		Level string `mapstructure:"level"`
 	} `mapstructure:"log"`
