@@ -51,7 +51,7 @@ var (
 )
 
 // Get 获取 logger 对象
-func Get(opts ...Option) zap.Logger {
+func Get(opts ...Option) *zap.Logger {
 	once.Do(func() {
 		// 初始化默认配置
 		opt := &option{
@@ -111,5 +111,5 @@ func Get(opts ...Option) zap.Logger {
 		}
 	})
 
-	return *instance
+	return instance
 }
